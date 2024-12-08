@@ -1,0 +1,165 @@
+INSERT INTO employees (employee_id, first_name, last_name, salary) VALUES (1, 'John', 'Doe', 50000.00); -- Inserting an example salary
+
+
+./presto-cli-0.282-executable.jar  --server localhost:8081 --catalog oracle --schema default
+                
+
+    Java-8
+
+1. Functional Interface:-  the interface which conatain only one abstract method and any number of static and default method is called 
+   ----------------------- functional interface. Ex:-
+ 
+                            Runnable - run()
+                            Callable - call()
+                            Comprable - compareTo()
+                            Compractor - compare()
+Examples: Runnable, Callable, Consumer, Supplier, etc.
+
+Optional class:-
+----------------
+                          Optional class in Java 8 is used to avoid NullPointerException. It is a wrapper class that encapsulates 
+                          the absence or presence of values. It forces programmers to think about the case when the value is not 
+                          present and take appropriate steps for handling it.
+
+ method reference:-
+--------------------
+
+      Method references are used in Java 8 to refer to methods of functional interfaces. It can be considered as a short-code version of using a lambda expression.
+
+2. Lambda Expression:-   it is a annonymous function. means which don't have any name or method without any name is called annonymouse function.
+   ------------------    It is only applicable for functional interface.
+                         The method which is present in functional interface for those method only lambda expression is applicable.
+                         we can provide implementation through lambda expression of functional interface abstract method.
+
+public interface Functional {
+	
+	//void m1();
+          int sub(int a, int b);
+
+}
+
+
+ public class LambdaTestInFunctional {
+	public static void main(String[] args) {
+		
+		//Functional f=() -> {System.out.println("method m1");};
+		//f.m1();
+
+                  Functional f=(a,b)->a-b;
+                  System.out.println(f.sub(10, 2));
+	}
+
+}
+
+
+3. Consumer Functional Interface:-  It is a in built functional interface which introduced in java-8.
+                                    It can be used in all context where an object need to be consumed, 
+                                    It tooks input without returning any results.
+ 
+                                   Whenever we need one input and based on that input i need to perform some operation and i don't want to return
+                                   anything then we use consumer.
+         
+                                    void accept(T t);
+ 
+4. Predicate Funtional Interface:-  this is used for condition check. wheneever we want to check the function is giving true or false then we use this.
+                                     
+                                     boolean test(T t);
+
+5. Supplier Functional Interface:- it can be used in all context where there is no input but an output is expected.
+                                   for ex; suppose i have a list for filtering but after the filtering i didn't get any result but i need to 
+                                   return the result so in this case i can return dummy result with the help of supplier
+                                
+                                    T get();
+
+
+                                                     Stream API
+                                                    ------------
+Stream API:- stream api is used to process the collections of objects.
+             It is a sequence of objects which support various  methods that can be in pipelined to produce the desired results.
+             It is not a data structure instead it it takes the input from collection , array or i/o channels
+             It don't change the original data structure, they only provide the result as per the provided method.
+
+
+           why we use Stream API:- 
+              functional Programming
+              Code reduce
+              Bulk operation
+
+   Methods :- 
+              for each(consumer);   - to fetch the data
+              filter(predicate);    - to check the condition
+
+    Intermediate :- filter(), map(), distinct(), sorted(), limit(), skip()
+    Terminal:-      forEach(), min(), max(), collect(), count(), reduce(), findFirst(), toArray()
+
+                                                
+                                               Map and Flat Map
+                                              ------------------
+
+   Java 8 stream api provides both map and flatmap, both are intermediate method and return another stream as part of the output.
+   map() -      used for transformation 
+                map() take Stream as input and return Stream
+                It's mapper function produce single value for each input value hence it's called one to one mapping
+                Stream map(Stream s);
+
+   flatmap() -  used for transformation and flattering
+                faltmap() take Stream as input and return Stream
+                It's mapper function produce multiple value for each input value hence it's called one to many mapping
+
+   flattering - suppose i have a stream of stream data but i want to make it as a single stream so it converting 
+                stream of stream data as a single stream is called flattering the data 
+
+   Transformation - suppose i hve a list of string value but i want to change the string from lower to uppercase so converting lower to upper
+                    is called transforming the data.
+
+                                                 Map-reduce
+                                                -----------------
+
+   map-reduce is a function style programming it serves 2 purpose:-
+    map -     transforming the data
+    reduce -  aggregating the data (combine element of stream and produces a single stream)
+
+
+
+
+
+===============================================================================================================
+1:- Get the details of  employee in asc order in the organization?
+    --------------------------------------------------------------
+
+         employeeList.stream().sorted(Comparator.comparingDouble(Employee::getSalary)).forEach(System.out::println);
+
+2:-  Get the details of  employee in desc order in the organization
+---------------------------------------------------------------------
+
+        employeeList.stream().sorted(Comparator.comparingDouble(Employee::getSalary).reversed()).forEach(System.out::println);
+
+3:-  Get teh Details of 2nd highest paid employees:-
+------------------------------------------------
+
+  Optional<Employee> secondHighPaidEmpDetailss=employeeList.stream().sorted(Comparator.comparing(Employee::getSalary).reversed()).skip(1).findFirst();
+  System.out.println(secondHighPaidEmpDetailss);
+
+4:-  Get teh Details of highest paid employees:-
+------------------------------------------------
+
+        Optional<Employee> secondHighPaidEmpDetailss=employeeList.stream().sorted(Comparator.comparing(Employee::getSalary).reversed()).findFirst();
+    	System.out.println(secondHighPaidEmpDetailss);
+
+5:- Get the Details  of all employees who have joined after 2015?
+--------------------------------------------------------------------
+
+     employeeList.stream().filter(a->a.getYearOfJoining()>2015).forEach(System.out::println);
+
+
+6:- Get the name of all employees who have joined after 2015?
+--------------------------------------------------------------------
+
+      employeeList.stream().filter(a->a.getYearOfJoining()>2015).map(Employee::getName).forEach(System.out::println);
+
+
+7:- Count the number of employees in each department?
+-----------------------------------------------------------
+
+        Map<String, Long> noOfEmpInEachDept = employeeList.stream().collect(Collectors.groupingBy(Employee::getDepartment, Collectors.counting()));
+    	System.out.println(noOfEmpInEachDept);

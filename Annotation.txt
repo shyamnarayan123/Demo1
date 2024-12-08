@@ -1,0 +1,75 @@
+1:-   @Autowired
+2:-   @Qualifier
+3:-   @Resource
+4:-   @Configuration
+5:-   @Bean
+6:-   @Component
+7:-   @Controller
+8:-   @RestController
+9:-   @Service
+10:-  @Repository
+11:-  @ComponentScan   - base pckg to all child pckg
+12:-  @RequestMapping
+
+
+@SpringBootApplication
+
+A single @SpringBootApplication annotation is used to enable the following annotations:
+
+@EnableAutoConfiguration: It enables the Spring Boot auto-configuration mechanism.
+@ComponentScan: It scans the package where the application is located.
+@Configuration: It allows us to register extra beans in the context or import additional configuration classes.
+
+ 
+ 1: @Autowired-  is used for automatic dependency injection.enables you to inject the object dependency implicitly.  It internally uses setter or constructor injection. 
+                  Spring framework is built on dependency injection and we inject 
+                 injection and we inject  the class dependencies through spring bean configuration file
+
+ 2:- @Qualifier- The @Qualifier annotation is used to resolve the autowiring conflict, when there are multiple beans of same type. 
+                 The @Qualifier annotation can be used on any class annotated with @Component or on methods annotated with @Bean . 
+                 This annotation can also be applied on constructor arguments or method parameters.
+
+ 3:- @Resource- The javax.annotation.Resource annotation is used to declare a reference to a resource; @Resource can decorate a class, a field, or a method.
+                The container will inject the resource referred to by @Resource into the component either at runtime or when the component is initialized, 
+                depending on whether field/method injection or class injection is used. With field-based and method-based injection, the container will inject
+                the resource when the application is initialized. For class-based injection, the resource is looked up by the application at runtime.
+
+ 4:- @Configuration annotation indicates that a class declares one or more @Bean methods and may be processed by the Spring container to generate bean 
+     definitions and service requests for those beans at runtime. Since spring 2, we were writing our bean configurations to xml files.
+
+ 5:- @Bean-   it is applied on a method to specify that it returns a bean to be managed by Spring context. Spring Bean annotation is usually declared in
+              Configuration classes methods. 
+
+ 6:- @Component- it is an annotation that allows Spring to automatically detect our custom beans.
+
+ 7:- @Controller- indicates that a particular class serves the role of a controller. Spring Controller annotation is typically used in combination with annotated
+                  handler methods based on the @RequestMapping annotation. It can be applied to classes only. It's used to mark a class as a web request handler
+
+                  In Spring Boot, the controller class is responsible for processing incoming REST API requests, preparing a model, and returning the view to  
+                   be rendered as a response. The controller classes in Spring are annotated either by the @Controller or the @RestController annotation.
+
+ 8:- @RestController(CL): RestController is used for making restful web services with the help of the @RestController annotation. 
+                     This annotation is used at the class level and allows the class to handle the requests made by the client.
+
+ 9:- @Service- it is used to mark the class as a service provider. So overall @Service annotation is used with classes that provide some business functionalities. 
+               Spring context will autodetect these classes when annotation-based configuration and classpath scanning is used. 
+
+ 10:- @Repository- @Repository Annotation is a specialization of @Component annotation which is used to indicate that the class provides the mechanism for storage,
+                    retrieval, update, delete and search operation on objects.
+
+ 11:- @ComponentScan- With Spring, we use the @ComponentScan annotation along with the @Configuration annotation to specify the packages that we want to be scanned.
+                      @ComponentScan without arguments tells Spring to scan the current package and all of its sub-packages.
+
+
+ 1:-  @RequestMapping- is the most common and widely used annotation in Spring MVC. It is used to map web requests onto specific handler classes and/or handler methods.
+      @RequestMapping can be applied to the controller class as well as methods.
+
+      It has the following optional options
+
+      name: Assign a name to this mapping.
+      value:  The primary mapping expressed by this annotation.
+      method: The HTTP request methods to map to
+      headers: The headers of the mapped request, narrowing the primary mapping.
+
+ 3:- In Spring Boot, the controller class is responsible for processing incoming REST API requests, preparing a model, and returning the view to be rendered as a 
+     response. The controller classes in Spring are annotated either by the @Controller or the @RestController annotation.
